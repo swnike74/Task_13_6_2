@@ -21,7 +21,10 @@
             }
             Console.WriteLine($"Кол-во слов в списке {booklist.Count}");
 
-
+            // Создаем хэш-сет, передавая в конструктор наш массив
+            HashSet<string> hSet = new HashSet<string>(words);
+            Console.WriteLine("Длина хэш-сета " + hSet.Count);
+            Console.WriteLine();
 
         }
     }
