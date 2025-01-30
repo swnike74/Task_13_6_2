@@ -1,4 +1,6 @@
-﻿namespace Task_13_6_2
+﻿using System.Linq;
+
+namespace Task_13_6_2
 {
     internal class Program
     {
@@ -6,8 +8,10 @@
         {
             string text = File.ReadAllText("C:\\Users\\swnik\\Downloads\\cdev_Text.txt");
 
+            var noPunctuationText = new string(text.Where(c => !char.IsPunctuation(c)).ToArray());
+
             char[] delimiters = new char[] { ' ', ',', '.', '-', '\r', '\n' };
-            var words = text.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            var words = noPunctuationText.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
             // выводим количество
             Console.WriteLine($"Кол-во слов в массиве {words.Length}");
 
@@ -37,8 +41,30 @@
                 else
                     dict.Add(item, 1);
             }
-
+            
             var t = dict.Values;
+            var s = dict.Keys;
+            
+            var dict2 = new Dictionary<int, string>();
+            int j = 0;
+            string st;
+            for (int i = 0; i < 20; i++)
+            {
+                int max = -100;
+                string keymax = "";
+                foreach (var item in dict.Keys)
+                {
+                    var dig = dict[item];
+                    if (dig > max)
+                    {
+                        max = dig;
+                        keymax = item;
+                    }
+                }
+                Console.WriteLine($"Место {j.ToString()}: Слово {keymax} ,количество в тексте:  {max.ToString()}");
+                j++;
+                dict.Remove(keymax);
+            }
             var sdict = new SortedDictionary<string, int>(dict);
 
             Console.WriteLine();
